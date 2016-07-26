@@ -1,0 +1,10 @@
+{
+  "ID": "myservice3",
+  "Name": "myservice3",
+  "Address": "127.0.0.1",
+  "Port": 7070,
+  "Check": {
+    "Interval": "10s",
+    "TTL": "15s"
+  }
+}

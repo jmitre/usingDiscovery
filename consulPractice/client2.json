@@ -1,0 +1,22 @@
+{
+  "datacenter": "dc1",
+  "data_dir": "/opt/consulclient2",
+  "log_level": "INFO",
+  "node_name": "client2",
+  "server": false,
+  "ports" : {
+
+    "dns" : -1,
+    "http" : 6500,
+    "rpc" : 6400,
+    "serf_lan" : 6301,
+    "serf_wan" : 6302,
+    "server" : 6300
+  },
+
+  "start_join" : [
+    "127.0.0.1:9301",
+    "127.0.0.1:10301",
+    "127.0.0.1:11301"
+    ]
+}
