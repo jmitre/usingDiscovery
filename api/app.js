@@ -4,8 +4,8 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var http = require("http")
-var consul = require("consul")();
+var http = require("http");
+var selfRegister = require("./selfRegister");
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -30,21 +30,6 @@ app.use('/', routes);
 app.use('/users', users);
 app.use('/students', studentsRoutes);
 app.use('/helloworld', helloworldRoute);
-
-var service = {
-  name: "helloworld",
-  id: "helloworld",
-  tags: ["http://localhost:3000/helloworld", "localhost", "3000", "/helloworld"],
-  port: 3000,
-  check: {
-    http: "http://localhost:3000/helloworld/health",
-    interval: "10s"
-  }
-}
-
-  consul.agent.service.register(service, function(err) {
-    if (err) throw err;
-  });
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
