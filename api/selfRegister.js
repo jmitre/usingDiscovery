@@ -14,6 +14,6 @@ var service = {
   }
 }
 
-module.exports =  consul.agent.service.register(service, function(err) {
+module.exports = consul.agent.service.register(service, function(err) {
     if (err) throw err;
   });
