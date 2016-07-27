@@ -5,6 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var http = require("http")
+var consul = require("consul")();
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -28,44 +29,22 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes);
 app.use('/users', users);
 app.use('/students', studentsRoutes);
-app.use('/helloworld', helloworldRoute)
+app.use('/helloworld', helloworldRoute);
 
-var request = require('request');
-
-var service =   JSON.stringify({
-      "name": "hello",
-      "tags": [
-        "http://localhost:3000/helloworld"
-      ],
-      "address": "127.0.0.1",
-      "enableTagOverride": false
-  })
-
-  var options = {
-    host: 'localhost',
-    path: '/v1/agent/service/register',
-    port: '8500',
-    method: 'PUT',
-    headers: headers
+var service = {
+  name: "helloworld",
+  id: "helloworld",
+  tags: ["http://localhost:3000/helloworld", "localhost", "3000", "/helloworld"],
+  port: 3000,
+  check: {
+    http: "http://localhost:3000/helloworld/health",
+    interval: "10s"
   }
-
-  var headers = {
-    'Content-Type': 'application/json',
-    'Content-Length': service.length
-};
-
-function register() {
-    console.log("IM REGISTERING");
-    http.request(options, function (res) {
-      console.log("REGISTERED --->", res.body);
-    }).write(service);
 }
-register();
 
-
-
-
-
+  consul.agent.service.register(service, function(err) {
+    if (err) throw err;
+  });
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
