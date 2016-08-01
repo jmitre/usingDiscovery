@@ -5,7 +5,6 @@
   "node_name": "client1",
   "server": false,
   "ports" : {
-
     "dns" : -1,
     "http" : 8500,
     "rpc" : 8400,

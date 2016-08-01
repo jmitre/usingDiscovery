@@ -5,11 +5,9 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var http = require("http");
-var selfRegister = require("./selfRegister");
+//var selfRegister = require("./selfRegister");
 
 var routes = require('./routes/index');
-var users = require('./routes/users');
-var studentsRoutes = require('./routes/students');
 var helloworldRoute = require('./routes/helloworld');
 
 var app = express();
@@ -27,8 +25,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
-app.use('/users', users);
-app.use('/students', studentsRoutes);
 app.use('/helloworld', helloworldRoute);
 
 // catch 404 and forward to error handler
@@ -61,6 +57,9 @@ app.use(function(err, req, res, next) {
     error: {}
   });
 });
+
+
+app.listen(process.env.PORT || 3001);
 
 
 module.exports = app;

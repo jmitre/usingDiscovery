@@ -1,1 +1,1 @@
-consul agent -ui -config-file=client2.json -bind=127.0.0.1
+consul agent -ui -config-file=client2.json -client=10.144.138.220 -advertise=10.144.138.220
